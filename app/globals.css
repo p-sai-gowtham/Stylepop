@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 24 10% 10%;
+    --card: 40 33% 98%;
+    --card-foreground: 24 10% 10%;
+    --popover: 40 33% 98%;
+    --popover-foreground: 24 10% 10%;
+    --primary: 24 10% 10%;
+    --primary-foreground: 40 33% 98%;
+    --secondary: 40 20% 94%;
+    --secondary-foreground: 24 10% 10%;
+    --muted: 40 20% 94%;
+    --muted-foreground: 24 5% 45%;
+    --accent: 40 20% 94%;
+    --accent-foreground: 24 10% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 24 10% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 24 10% 10%;
+    --foreground: 40 33% 98%;
+    --card: 24 10% 12%;
+    --card-foreground: 40 33% 98%;
+    --popover: 24 10% 12%;
+    --popover-foreground: 40 33% 98%;
+    --primary: 40 33% 98%;
+    --primary-foreground: 24 10% 10%;
+    --secondary: 24 10% 18%;
+    --secondary-foreground: 40 33% 98%;
+    --muted: 24 10% 18%;
+    --muted-foreground: 40 20% 60%;
+    --accent: 24 10% 18%;
+    --accent-foreground: 40 33% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 24 10% 20%;
+    --input: 24 10% 20%;
+    --ring: 40 33% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-charcoal-900 to-charcoal-600;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .image-hover {
+    @apply transition-transform duration-700 hover:scale-105;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Selection color */
+::selection {
+  background: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary));
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Three.js canvas styles */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.canvas-container canvas {
+  display: block;
+}
+
+/* Product card hover effects */
+.product-card {
+  @apply relative overflow-hidden rounded-lg bg-white transition-all duration-500;
+}
+
+.product-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 transition-opacity duration-300;
+}
+
+.product-card:hover::before {
+  @apply opacity-100;
+}
+
+/* Loading skeleton animation */
+.skeleton {
+  @apply animate-pulse bg-muted;
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted) / 0.5) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Magnetic button effect */
+.magnetic-btn {
+  @apply relative inline-flex items-center justify-center overflow-hidden transition-transform duration-200;
+}
+
+.magnetic-btn:hover {
+  transform: scale(1.02);
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
