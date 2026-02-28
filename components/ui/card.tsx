@@ -6,24 +6,29 @@ const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { withHover?: boolean }
 >(({ className, withHover = false, ...props }, ref) => {
-  const Component = withHover ? motion.div : "div";
-  const hoverProps = withHover
-    ? {
-        whileHover: { y: -8, transition: { duration: 0.3 } },
-        initial: { opacity: 0, y: 20 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.5 },
-      }
-    : {};
+  const cardClassName = cn(
+    "rounded-lg border bg-card text-card-foreground shadow-sm",
+    className
+  );
+
+  if (withHover) {
+    return (
+      <motion.div
+        ref={ref}
+        className={cardClassName}
+        whileHover={{ y: -8, transition: { duration: 0.3 } }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        {...(props as React.ComponentPropsWithoutRef<typeof motion.div>)}
+      />
+    );
+  }
 
   return (
-    <Component
+    <div
       ref={ref}
-      className={cn(
-        "rounded-lg border bg-card text-card-foreground shadow-sm",
-        className
-      )}
-      {...hoverProps}
+      className={cardClassName}
       {...props}
     />
   );
