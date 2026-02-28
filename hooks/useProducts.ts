@@ -70,7 +70,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   }, []);
 
-  const getProductBySlug = useCallback(async (slug: string) => {
+  const getProductBySlug = useCallback(async (slug: string): Promise<Product | null> => {
     try {
       setLoading(true);
       const { data, error: supabaseError } = await supabase
@@ -80,7 +80,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
         .single();
 
       if (supabaseError) throw supabaseError;
-      return data;
+      return data as Product;
     } catch (err) {
       setError(err as Error);
       return null;
@@ -89,7 +89,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
     }
   }, []);
 
-  const getFeaturedProducts = useCallback(async (limit = 8) => {
+  const getFeaturedProducts = useCallback(async (limit = 8): Promise<Product[]> => {
     try {
       setLoading(true);
       const { data, error: supabaseError } = await supabase
@@ -99,7 +99,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
         .limit(limit);
 
       if (supabaseError) throw supabaseError;
-      return data || [];
+      return (data as Product[]) || [];
     } catch (err) {
       setError(err as Error);
       return [];
@@ -108,7 +108,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
     }
   }, []);
 
-  const getNewArrivals = useCallback(async (limit = 8) => {
+  const getNewArrivals = useCallback(async (limit = 8): Promise<Product[]> => {
     try {
       setLoading(true);
       const { data, error: supabaseError } = await supabase
@@ -119,7 +119,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
         .limit(limit);
 
       if (supabaseError) throw supabaseError;
-      return data || [];
+      return (data as Product[]) || [];
     } catch (err) {
       setError(err as Error);
       return [];
@@ -128,7 +128,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
     }
   }, []);
 
-  const searchProducts = useCallback(async (searchTerm: string) => {
+  const searchProducts = useCallback(async (searchTerm: string): Promise<Product[]> => {
     try {
       setLoading(true);
       const { data, error: supabaseError } = await supabase
@@ -138,7 +138,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
         .or(`description.ilike.%${searchTerm}%`);
 
       if (supabaseError) throw supabaseError;
-      return data || [];
+      return (data as Product[]) || [];
     } catch (err) {
       setError(err as Error);
       return [];
