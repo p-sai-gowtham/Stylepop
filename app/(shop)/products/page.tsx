@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filter, Grid3X3, List, SlidersHorizontal, X } from 'lucide-react';
@@ -28,6 +28,27 @@ const categories = [
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-sand-50 pt-24 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="animate-pulse space-y-8">
+            <div className="h-10 bg-sand-200 rounded w-1/3" />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="aspect-[3/4] bg-sand-200 rounded-xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <ProductsContent />
+    </Suspense>
+  );
+}
+
+function ProductsContent() {
   const searchParams = useSearchParams();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
