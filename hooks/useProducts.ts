@@ -54,7 +54,7 @@ export function useProducts(initialFilters?: Partial<FilterOptions>) {
 
       if (supabaseError) throw supabaseError;
 
-      setProducts(data || []);
+      setProducts((data as unknown as Product[]) || []);
     } catch (err) {
       setError(err as Error);
     } finally {

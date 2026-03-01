@@ -29,7 +29,7 @@ export function useWishlist() {
         .eq('user_id', user!.id);
 
       if (supabaseError) throw supabaseError;
-      setWishlist(data || []);
+      setWishlist((data as unknown as WishlistItem[]) || []);
     } catch (err) {
       setError(err as Error);
     } finally {

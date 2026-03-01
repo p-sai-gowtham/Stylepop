@@ -28,7 +28,7 @@ export function useCart() {
           }
 
           if (cartData) {
-            setCart(cartData);
+            setCart(cartData as unknown as Cart);
           } else {
             const { data: newCart, error: createError } = await supabase
               .from('carts')
@@ -37,7 +37,7 @@ export function useCart() {
               .single();
 
             if (createError) throw createError;
-            setCart(newCart);
+            setCart(newCart as unknown as Cart);
           }
         } else {
           const localCart = localStorage.getItem(CART_STORAGE_KEY);
@@ -96,7 +96,7 @@ export function useCart() {
           .eq('id', cart.id)
           .single();
 
-        setCart(updatedCart);
+        setCart(updatedCart as unknown as Cart);
       } else {
         setCart((prev) => {
           if (!prev) return null;
@@ -162,7 +162,7 @@ export function useCart() {
           .eq('id', cart.id)
           .single();
 
-        setCart(updatedCart);
+        setCart(updatedCart as unknown as Cart);
       } else {
         setCart((prev) => {
           if (!prev) return null;
@@ -207,7 +207,7 @@ export function useCart() {
           .eq('id', cart.id)
           .single();
 
-        setCart(updatedCart);
+        setCart(updatedCart as unknown as Cart);
       } else {
         setCart((prev) => {
           if (!prev) return null;
